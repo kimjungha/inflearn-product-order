@@ -1,16 +1,30 @@
 package com.example.inflearnproductorderservice.product;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 import org.springframework.util.Assert;
+@Entity
+@Table(name ="products")
+@Getter
+@NoArgsConstructor(access =  AccessLevel.PROTECTED)
 
 /**
  * 2-1. 저장 되는 클래스
  */
 class Product {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private final String name;
-    private final int price;
-    private final DiscountPolicy discountPolicy;
+    private  String name;
+    private  int price;
+    private  DiscountPolicy discountPolicy;
 
     public Product(final String name, final int price, final DiscountPolicy discountPolicy) {
         // 저장 되는 클래스에서 한번 더 validation
@@ -22,12 +36,4 @@ class Product {
         this.discountPolicy = discountPolicy;
     }
 
-    public void assignId(final Long id) {
-        this.id = id;
-    }
-
-    //@Getter 애노테이션을 사용하면 테스트가 실패함 -> 런타임 안해서 getter 를 못 가져오는 거 같음
-    public Long getId() {
-        return id;
-    }
 }
